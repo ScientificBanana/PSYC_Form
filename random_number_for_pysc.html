@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>随机跳转中...</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+      }
+      .card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+      .result {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: #007aff;
+        margin: 1rem 0;
+      }
+      .target {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+        word-break: break-all;
+      }
+      .btn {
+        display: inline-block;
+        background-color: #007aff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.2s;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>🎲 正在生成随机数...</h1>
+      <div class="result" id="randomNumber">-</div>
+      <p class="target" id="statusText">准备跳转中...</p>
+      <button class="btn" onclick="generateAndRedirect()">
+        重新抽取并跳转
+      </button>
+    </div>
+
+    <script>
+      // 定义数值与网址的映射关系
+      const urlMap = {
+        1: "https://docs.google.com/forms/d/e/1FAIpQLSfg_Vcv8QsySVQteNDQkEUaQb6kA86bt73OWVf2KFMMXAdKgg/viewform?usp=publish-editor/",
+        2: "https://docs.google.com/forms/d/e/1FAIpQLSc8igWQardgNcOy9k0VkZ3lA3Udt0ga4orJlHIkxtM3FLqmfA/viewform?usp=publish-editor/",
+      };
+
+      function generateAndRedirect() {
+        // 生成 1 或 2 的随机整数
+        const randomNum = Math.floor(Math.random() * 2) + 1;
+        const targetUrl = urlMap[randomNum];
+
+        // 更新 UI 界面
+        document.getElementById("randomNumber").textContent = randomNum;
+        document.getElementById("statusText").innerHTML =
+          `生成的随机数为 <b>${randomNum}</b>，即将跳转至：<br><a href="${targetUrl}">${targetUrl}</a>`;
+
+        // 延时 800 毫秒后自动跳转（给用户短暂看到随机结果的视觉反馈）
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 800);
+      }
+
+      // 页面加载完成后自动触发执行
+      window.onload = generateAndRedirect;
+    </script>
+  </body>
+</html>
